@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/objects/TodoObject.dart';
+import 'package:todo/model/TodoObject.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/CustomCheckboxTile.dart';
 

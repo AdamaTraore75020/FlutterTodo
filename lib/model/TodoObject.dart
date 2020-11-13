@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:math';
-import 'package:todo/objects/ColorChoice.dart';
+import 'package:todo/model/ColorChoice.dart';
 
 enum TodoCardSettings { edit_color, delete }
 
