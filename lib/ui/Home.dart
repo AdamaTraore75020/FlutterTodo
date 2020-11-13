@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/DummyData.dart';
 import 'package:todo/CustomIcons.dart';
-import 'package:todo/objects/TodoObject.dart';
+import 'package:todo/model/TodoObject.dart';
 import 'package:todo/ui/Details.dart';
 
 class HomePage extends StatefulWidget {
