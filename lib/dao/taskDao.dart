@@ -10,28 +10,50 @@ class TaskDao {
     return result;
   }
 
-  Future<List<TaskObject>> getAllTasks({List<String> columns, String query}) async {
+  Future<List<TaskObject>> getAllTasks(
+      {List<String> columns, String query}) async {
     final db = await dbProvider.database;
     List<Map<String, dynamic>> result;
     if (query != null) {
       if (query.isNotEmpty) {
-        result = await db.query(taskTable, columns: columns, where: 'description LIKE ?', whereArgs: ["%$query%"]);
+        result = await db.query(taskTable,
+            columns: columns,
+            where: 'description LIKE ?',
+            whereArgs: ["%$query%"]);
+      }
+    } else {
+      result = await db.query(taskTable, columns: columns);
+    }
+
+    List<TaskObject> tasks = result.isNotEmpty
+        ? result.map((item) => TaskObject.fromDatabaseJson(item)).toList()
+        : [];
+
+    return tasks;
+  }
+
+  Future<List<TaskObject>> getTasksByIdTodo(
+      {List<String> columns, String query}) async {
+    final db = await dbProvider.database;
+    List<Map<String, dynamic>> result;
+    if (query != null) {
+      if (query.isNotEmpty) {
+        result = await db.query(taskTable,
+            columns: columns, where: 'id_todo = ?', whereArgs: ["$query"]);
       }
     }
-    else {
-        result = await db.query(taskTable, columns: columns);
-    }
-      
-    List<TaskObject> tasks = result.isNotEmpty 
-      ? result.map((item) => TaskObject.fromDatabaseJson(item)).toList()
-      : [];
+
+    List<TaskObject> tasks = result != null && result.isNotEmpty
+        ? result.map((item) => TaskObject.fromDatabaseJson(item)).toList()
+        : [];
 
     return tasks;
   }
 
   Future<int> updateTask(TaskObject task) async {
     final db = await dbProvider.database;
-    var result = await db.update(taskTable, task.toDatabaseJson(), where: 'id = ?', whereArgs: [task.id]);
+    var result = await db.update(taskTable, task.toDatabaseJson(),
+        where: 'id = ?', whereArgs: [task.id]);
     return result;
   }
 

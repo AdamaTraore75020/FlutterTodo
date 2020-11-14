@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:todo/DummyData.dart';
+import 'package:todo/InitData.dart';
 import 'package:todo/CustomIcons.dart';
+import 'package:todo/bloc/taskBloc.dart';
 import 'package:todo/model/TodoObject.dart';
 import 'package:todo/ui/Details.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
+
+  final TaskBloc taskBloc = TaskBloc();
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -43,6 +46,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         backgroundGradient = todos[page].gradient.lerpTo(todos[page + 1].gradient, percent);
       });
     });
+
+    //init data
+    
   }
 
   @override
@@ -171,7 +177,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         child: Stack(
                           children: <Widget>[
                             Hero(
-                              tag: todoObject.uuid + "_background",
+                              tag: todoObject.id.toString() + "_background",
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Colors.white,
@@ -194,7 +200,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         Stack(
                                           children: <Widget>[
                                             Hero(
-                                              tag: todoObject.uuid + "_backIcon",
+                                              tag: todoObject.id.toString() + "_backIcon",
                                               child: Material(
                                                 type: MaterialType.transparency,
                                                 child: Container(
@@ -208,7 +214,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                               ),
                                             ),
                                             Hero(
-                                              tag: todoObject.uuid + "_icon",
+                                              tag: todoObject.id.toString() + "_icon",
                                               child: Container(
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
@@ -225,7 +231,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         ),
                                         Spacer(),
                                         Hero(
-                                          tag: todoObject.uuid + "_more_vert",
+                                          tag: todoObject.id.toString() + "_more_vert",
                                           child: Material(
                                             color: Colors.transparent,
                                             type: MaterialType.transparency,
@@ -264,7 +270,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     ),
                                   ),
                                   Hero(
-                                    tag: todoObject.uuid + "_number_of_tasks",
+                                    tag: todoObject.id.toString() + "_number_of_tasks",
                                     child: Material(
                                         color: Colors.transparent,
                                         child: Text(
@@ -275,7 +281,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   ),
                                   Spacer(),
                                   Hero(
-                                    tag: todoObject.uuid + "_title",
+                                    tag: todoObject.id.toString() + "_title",
                                     child: Material(
                                       color: Colors.transparent,
                                       child: Text(
@@ -287,7 +293,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   ),
                                   Spacer(),
                                   Hero(
-                                    tag: todoObject.uuid + "_progress_bar",
+                                    tag: todoObject.id.toString() + "_progress_bar",
                                     child: Material(
                                       color: Colors.transparent,
                                       child: Row(

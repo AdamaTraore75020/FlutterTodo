@@ -5,13 +5,15 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 final taskTable = 'Task';
-class DatabaseProvider  {
+final todoTable = 'Todo';
+
+class DatabaseProvider {
   static final DatabaseProvider dbProvider = DatabaseProvider();
 
   Database _database;
-  int databaseVersion = 1;
+  int databaseVersion = 3;
 
-  Future<Database> get database async  {
+  Future<Database> get database async {
     if (_database != null) return _database;
     _database = await createDatabase();
     return _database;
@@ -23,22 +25,23 @@ class DatabaseProvider  {
     String path = join(documentsDirectory.path, "task.db");
 
     var database = await openDatabase(path,
-    version: databaseVersion, onCreate: initDb, onUpgrade: onUpgrade);
+        version: databaseVersion, onCreate: initDb, onUpgrade: onUpgrade);
     return database;
   }
 
   void onUpgrade(Database database, int oldVersion, int newVersion) {
-    if(newVersion > oldVersion) {
+    if (newVersion > oldVersion) {
       databaseVersion++;
     }
   }
 
   void initDb(Database database, int version) async {
-      await database.execute('''
+    await database.execute('''
       CREATE TABLE $taskTable(
         id INTEGER PRIMARY KEY,
         task TEXT DEFAULT '',
-        is_complete INTEGER
+        is_complete INTEGER,
+        id_todo INTEGER
       )
       ''');
   }
